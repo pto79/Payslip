@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <meta content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" name="viewport">
+        <title>
+        </title>
+        <link href="manifest.json" rel="manifest">
+          <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+          <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+            <link href="css/style.css" rel="stylesheet">
+              <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+              <!-- ionic/angularjs js -->
+              <script src="lib/ionic/js/ionic.bundle.js">
+              </script>
+              <script src="lib/ngCordova/dist/ng-cordova.js">
+              </script>
+              <!-- cordova script (this will be a 404 during development) -->
+              <script src="cordova.js">
+              </script>
+              <script src="lib/angular-translate/angular-translate.js">
+              </script>
+              <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js">
+              </script>
+              <script src="lib/ng-file-upload/dist/ng-file-upload-shim.js">
+              </script>
+              <script src="lib/ng-file-upload/dist/ng-file-upload.js">
+              </script>
+              <!-- your app's js -->
+              <script src="js/app.js">
+              </script>
+              <script src="js/translate.js">
+              </script>
+              <script src="js/contact.js">
+              </script>
+            </link>
+          </link>
+        </link>
+      </meta>
+    </meta>
+    <style type="text/css">
+      form .progress {
+    line-height: 15px;
+}
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+    </style>
+  </head>
+  <body ng-app="contact" ng-controller="ContactCtrl">
+    <div class="bar bar-header">
+      <h1 class="title" translate="">
+        Contact HR
+      </h1>
+        <button class="button button-clear button-assertive pull-right" ng-click="selectLan()" ng-show="nowLan=='english'">中文</button>
+        <button class="button button-clear button-assertive pull-right" ng-click="selectLan()" ng-show="nowLan=='chinese'">English</button>
+    </div>
+    <ion-content class="has-header has-footer">
+      <div class="list">
+        <div class="item item-divider" translate="">
+          Type:
+        </div>
+        <ion-list>
+          <ion-radio ng-model="contact.type" ng-value="'feedback'">
+            {{'Feedback' | translate}}
+          </ion-radio>
+          <ion-radio ng-model="contact.type" ng-value="'claim'">
+            {{'Claim' | translate}}
+          </ion-radio>
+        </ion-list>
+        <div class="item item-divider" translate="">
+          Note:
+        </div>
+        <label class="item item-input item-stacked-label">
+          <textarea ng-model="contact.note" placeholder="{{'kindly leave the note here' | translate}}">
+          </textarea>
+        </label>
+      </div>
+      <button class="button icon-left ion-upload button-royal" ng-model="picFile" ng-show="contact.type == 'claim'" ngf-accept="'image/*'" ngf-multiple="false" ngf-select="selectImage(picFile)" translate="">
+        Upload Claim Photo
+      </button>
+      <button class="button ion-email button-energized" ng-click="submitContact(contact)" translate="">
+        Submit
+      </button>
+      <ion-scroll direction="x" style="overflow: scroll; white-space: nowrap;">
+        <img ng-click="showPic($index)" ng-repeat="image in collection" ngf-src="image" style="width:20%; padding: 5px 5px 5px 5px;"/>
+      </ion-scroll>
+      <span class="progress" ng-show="progress >= 0 &&  progress < 100">
+        <div ng-bind="progress + '%'" style="width:{{progress}}%">
+        </div>
+      </span>
+    </ion-content>
+    <div class="bar bar-footer">
+      <button class="button icon-left ion-home button-positive" ng-click="goHome()" translate="">
+        Home
+      </button>
+      <button class="button icon-left ion-log-out button-assertive" ng-click="logout()" translate="">
+        Log Out
+      </button>
+    </div>
+    <script id="templates/modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-content class="padding">
+          <img ngf-src="collection[indexOfImage]" style="width:100%;overflow: scroll;" ng-click="modal.hide()"/>
+          <button class="button button-block button-assertive" ng-click="delImage(indexOfImage)" translate="">
+            Delete
+          </button>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+  </body>
+</html>

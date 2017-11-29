@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <meta content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" name="viewport">
+        <title>
+        </title>
+        <link href="manifest.json" rel="manifest">
+          <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+          <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+            <link href="css/style.css" rel="stylesheet">
+              <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+              <!-- ionic/angularjs js -->
+              <script src="lib/ionic/js/ionic.bundle.js">
+              </script>
+              <script src="lib/ngCordova/dist/ng-cordova.js">
+              </script>
+              <!-- cordova script (this will be a 404 during development) -->
+              <script src="cordova.js">
+              </script>
+              <script src="lib/angular-translate/angular-translate.js">
+              </script>
+              <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js">
+              </script>
+              <!-- your app's js -->
+              <script src="js/app.js">
+              </script>
+              <script src="js/translate.js">
+              </script>
+              <script src="js/payslip.js">
+              </script>
+              <script src="js/html2canvas.js">
+              </script>
+            </link>
+          </link>
+        </link>
+      </meta>
+    </meta>
+  </head>
+  <body ng-app="payslip" ng-controller="PayslipCtrl">
+    <div class="bar bar-header">
+      <h1 class="title" translate="">
+        Payslip Details
+      </h1>
+      <button class="button button-clear button-assertive pull-right" ng-click="selectLan()" ng-show="nowLan=='english'">
+        中文
+      </button>
+      <button class="button button-clear button-assertive pull-right" ng-click="selectLan()" ng-show="nowLan=='chinese'">
+        English
+      </button>
+    </div>
+    <ion-content class="has-header has-footer">
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label" translate="">
+            Payslip Month
+          </div>
+          <select ng-model="payslip.period">
+            <script language="javascript" type="text/javascript">
+              var now = new Date();
+              var month = now.getMonth() + 1;
+              var year = now.getFullYear();
+              var month_text = "";
+              var sel = "";
+
+              for(var d=1;d<=12;d++)
+              {
+                if(month < 10)
+                  month_text = "0" + month;
+                else
+                  month_text = month;
+
+                if(month == now.getMonth()+1)
+                  sel = "selected";
+                else
+                  sel = "";
+
+                document.write("<option value=" + year + "-" + month_text +" "+ sel + ">" + year + "-" + month_text + "</option>");
+                month--;
+
+                if(month < 1) {
+                  month = 12;
+                  year--;
+                }
+              }
+            </script>
+          </select>
+        </label>
+      </div>
+      <div class="list" id="exportthis">
+        <!-- Basic Info -->
+        <div class="row" style="text-align: center;">
+          <div class="col col-20" style="background-color:lightgray" translate="">
+            Name of Employer
+          </div>
+          <div class="col" style="font-size: large">
+            ABC Pte Ltd
+          </div>
+        </div>
+        <div class="row" style="text-align: center;">
+          <div class="col col-20" style="background-color:lightgray" translate="">
+            Name of Employee
+          </div>
+          <div class="col col-20">
+            Worker1
+          </div>
+          <div class="col" style="padding: 0px; border: 0px">
+            <div class="row" style="padding: 0px">
+              <div class="col" style="background-color:lightgray" translate="">
+                Date of Payment
+              </div>
+              <div class="col">
+                05 Feb 2015
+              </div>
+            </div>
+            <div class="row" style="padding: 0px">
+              <div class="col" style="background-color:lightgray" translate="">
+                Salary Period
+              </div>
+              <div class="col">
+                Dec 2016
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Earnings -->
+        <div class="row">
+          <div class="col" style="font-weight: bold; text-align: center; font-size: large" translate="">
+            Earnings
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-33" style="background-color:lightgray;text-align: center;" translate="">
+            Basic Pay
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 1,000.00
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-33" style="background-color:lightgray;text-align: center;" translate="">
+            Overtime
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 525.00
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-33" style="background-color:lightgray;text-align: center;" translate="">
+            Allowances
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 715.00
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-50" style="background-color:lightgray; font-weight: bold;text-align: center;" translate="">
+            (A) GROSS PAY
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 2,240.00
+          </div>
+        </div>
+        <!-- Deductions -->
+        <div class="row">
+          <div class="col" style="font-weight: bold; text-align: center; font-size: large" translate="">
+            Deductions
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-33" style="background-color:lightgray;text-align: center;" translate="">
+            Meal
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 40.00
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-33" style="background-color:lightgray;text-align: center;" translate="">
+            Employee CPF Contribution
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 200.00
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-50" style="background-color:lightgray; font-weight: bold;text-align: center;" translate="">
+            (B) TOTAL DEDUCTIONS
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 240.00
+          </div>
+        </div>
+        <!-- Additions -->
+        <div class="row">
+          <div class="col" style="font-weight: bold; text-align: center; font-size: large" translate="">
+            Additions
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-33" style="background-color:lightgray;text-align: center;" translate="">
+            Transport
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 100.00
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-50" style="background-color:lightgray; font-weight: bold;text-align: center;" translate="">
+            (C) TOTAL ADDITIONS
+          </div>
+          <div class="col" style="text-align: right;">
+            $ 100.00
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-75" style="font-weight: bold; text-align: center; font-size: large" translate="">
+          NET PAY (A-B+C)
+        </div>
+        <div class="col" style="text-align: right;">
+          $ 2100.00
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-75" style="font-weight: bold; text-align: center; font-size: large" translate="">
+          Employer's CPF Contribution
+        </div>
+        <div class="col" style="text-align: right;">
+          $ 160.00
+        </div>
+      </div>
+      <button class="button button-block button-positive" ng-click="capture()" translate="">
+        Save as image
+      </button>
+    </ion-content>
+    <div class="bar bar-footer">
+      <button class="button icon-left ion-home button-positive" ng-click="goHome()" translate="">
+        Home
+      </button>
+      <button class="button icon-left ion-log-out button-assertive" ng-click="logout()" translate="">
+        Log Out
+      </button>
+    </div>
+  </body>
+</html>

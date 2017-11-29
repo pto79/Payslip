@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <meta content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" name="viewport">
+        <title>
+        </title>
+        <link href="manifest.json" rel="manifest">
+          <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+          <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+            <link href="css/style.css" rel="stylesheet">
+              <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+              <!-- ionic/angularjs js -->
+              <script src="lib/ionic/js/ionic.bundle.js">
+              </script>
+              <script src="lib/ngCordova/dist/ng-cordova.js">
+              </script>
+              <!-- cordova script (this will be a 404 during development) -->
+              <script src="cordova.js">
+              </script>
+              <script src="lib/angular-translate/angular-translate.js">
+              </script>
+              <script src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js">
+              </script>
+              <!-- your app's js -->
+              <script src="js/app.js">
+              </script>
+              <script src="js/translate.js">
+              </script>
+              <script src="js/manage_payslip.js">
+              </script>
+              <script src="js/html2canvas.js">
+              </script>
+            </link>
+          </link>
+        </link>
+      </meta>
+    </meta>
+  </head>
+  <body ng-app="payslip2" ng-controller="PayslipCtrl">
+    <div class="bar bar-header">
+      <h1 class="title" translate="">
+        Payslip Management
+      </h1>
+      <button class="button button-clear button-assertive pull-right" ng-click="selectLan()" ng-show="nowLan=='english'">
+        中文
+      </button>
+      <button class="button button-clear button-assertive pull-right" ng-click="selectLan()" ng-show="nowLan=='chinese'">
+        English
+      </button>
+    </div>
+    <ion-content class="has-header has-footer">
+
+      <div class="list" >
+        <div class="row" style="text-align:center">
+          <div class="col">
+            Jan 2017
+          </div>
+          <div class="col">
+            <button class="button button-assertive button-small">Delete</button>
+          </div>
+        </div>
+        <div class="row" style="text-align:center">
+          <div class="col">
+            Dec 2016
+          </div>
+          <div class="col">
+            <button class="button button-assertive button-small">Delete</button>
+          </div>
+        </div>
+        <div class="row" style="text-align:center">
+          <div class="col">
+            Nov 2016
+          </div>
+          <div class="col">
+            <button class="button button-assertive button-small">Delete</button>
+          </div>
+        </div>
+        <div class="row" style="text-align:center">
+          <div class="col">
+            Oct 2016
+          </div>
+          <div class="col">
+            <button class="button button-assertive button-small">Delete</button>
+          </div>
+        </div>
+        <div class="row" style="text-align:center">
+          <div class="col">
+            Sep 2016
+          </div>
+          <div class="col">
+            <button class="button button-assertive button-small">Delete</button>
+          </div>
+        </div>
+        </div>
+
+      <button class="button button-block button-positive" ng-click="capture()" translate="">
+        Upload Payslip
+      </button>
+    </ion-content>
+    <div class="bar bar-footer">
+      <button class="button icon-left ion-home button-positive" ng-click="goHome()" translate="">
+        Home
+      </button>
+      <button class="button icon-left ion-log-out button-assertive" ng-click="logout()" translate="">
+        Log Out
+      </button>
+    </div>
+  </body>
+</html>
